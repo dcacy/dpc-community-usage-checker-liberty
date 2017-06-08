@@ -28,3 +28,5 @@ View demo at <a target="top" href="https://dpc-community-usage-checker.mybluemix
   ```
 
 4. Deploy the application to a Java server and away you go!
+
+NOTE: Please read the LICENSE file for disclaimers and copyright.
