@@ -27,6 +27,6 @@ View demo at <a target="top" href="https://dpc-community-usage-checker.mybluemix
   httpcore-4.3.2.jar
   ```
 
-1. Deploy the application to a Java server and away you go!
+6. Deploy the application to a Java server and away you go!
 
 NOTE: Please read the LICENSE file for disclaimers and copyright!
