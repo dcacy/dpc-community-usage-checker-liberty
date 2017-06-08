@@ -1,0 +1,9 @@
+applications:
+- path: target/dpc-community-usage-checker-liberty.war
+  memory: 512M
+  instances: 1
+  domain: mybluemix.net
+  name: dpc-community-usage-checker-liberty
+  host: dpc-community-usage-checker-liberty
+  disk_quota: 1024M
+  

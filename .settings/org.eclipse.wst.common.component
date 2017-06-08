@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="dpc-community-usage-checker-liberty">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/.apt_generated"/>
+        <property name="java-output-path" value="/dpc-community-usage-checker-liberty/WebContent/WEB-INF/classes"/>
+        <property name="context-root" value="dpc-community-usage-checker-liberty"/>
+    </wb-module>
+</project-modules>
