@@ -3,7 +3,8 @@
 Instructions:
 
 This sample application lists all the Communities which can be viewed by the ID you provide, and also shows
-various metrics for each Community.
+various metrics for each Community. 
+For a node.js version of the same application, see [here](https://github.com/dcacy/dpc-community-usage-checker).
 
 View demo at <a target="top" href="https://dpc-community-usage-checker.mybluemix.net">https://dpc-community-usage-checker.mybluemix.net</a>
 
