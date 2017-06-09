@@ -19,7 +19,7 @@ View demo at <a target="top" href="https://dpc-community-usage-checker.mybluemix
 
 1. Download the following files and copy them to the `WebContent/WEB-INF/lib` directory
 
-  ```none
+  ```
   commons-codec-1.6.jar
   commons-logging-1.1.3.jar
   fluent-hc-4.3.4.jar
