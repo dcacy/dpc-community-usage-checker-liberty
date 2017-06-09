@@ -155,7 +155,47 @@ public class Community {
 		return result;
 	}
 
-	public JSONObject getCommunityActivity(JSONObject properties, String id) {
+	public JSONObject getSubcommunities(JSONObject properties, String id) {
+		debug("in getSubcommunities with id " + id);
+		JSONObject result = new JSONObject();
+		final String SUBCOMMUNITIES_URI = "/communities/service/atom/community/subcommunities?communityUuid="
+				+ id;
+		
+		try {
+			Executor executor = Executor.newInstance().auth(properties.get("CONNECTIONS_USERID").toString(), properties.get("CONNECTIONS_PASSWORD").toString());
+			URI serviceURI = new URI("https://" + properties.get("CONNECTIONS_HOST") + SUBCOMMUNITIES_URI).normalize();
+			InputStream subcommunitiesXmlStream = 
+				executor.execute(Request.Get(serviceURI)).returnContent().asStream();
+			
+//			debug("stream type is " + subcommunitiesXmlStream.getClass());
+//			debug("result is " + subcommunitiesXmlStream);
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			Document xmlDoc = builder.parse(subcommunitiesXmlStream);
+			XPath xPath =  XPathFactory.newInstance().newXPath();
+			NodeList entries = (NodeList) xPath.compile("/feed/entry").evaluate(xmlDoc, XPathConstants.NODESET);
+			JSONArray subcommunities = new JSONArray();
+			for ( int i = 0; i < entries.getLength(); i++ ) {
+				Node entry = entries.item(i);
+//				String fileLength = (String) xPath.compile("link/@length").evaluate(entry, XPathConstants.STRING);
+				Node title = (Node)xPath.compile("title").evaluate(entry, XPathConstants.NODE);
+				debug("title is " + title.getTextContent());
+				JSONObject subcommunity = new JSONObject();
+				subcommunity.put("title", title.getTextContent());
+//				file.put("size",  fileLength);
+				subcommunities.add(subcommunity);
+			}
+			result.put("type", "subcommunities");
+			result.put("data",  subcommunities);
+
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+public JSONObject getCommunityActivity(JSONObject properties, String id) {
 		debug("in getCommunityActivity with id " + id);
 		JSONObject result = new JSONObject();
 		Calendar cal = new GregorianCalendar();

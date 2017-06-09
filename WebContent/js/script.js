@@ -60,6 +60,8 @@ function getAllCommunities() {
     		$('#tabs').remove();
     		$('#error').html('');
     		
+    		$('#communityDetailsWrapper').show();
+
         $('#detailsLoadingDiv').mask('<div style="text-align:center;" style="background-color:#fff;">Please Wait...<br/><img src="images/watson.gif"></div>',200);
         // we set the community-id attribute earlier so that it would be here now
     		$.get('api?action=getCommunityDetails', { id : this.getAttribute('community-id')}, processCommunityDetails, 'json')
@@ -84,13 +86,14 @@ function getAllCommunities() {
 
 
 function processCommunityDetails(json) {
-	$('#communityDetailsWrapper').show();
+//	$('#communityDetailsWrapper').show();
 	var tabsHeader = '';
 	var tabsDetail = '';
 	var tabsCounter = 0;
 	var filesFound = false;
 	var membersFound = false;
 	var activitiesFound = false;
+	var subcommunitiesFound = false;
 	
 	// find members
 	var members = json.find( function(item) {
@@ -133,6 +136,19 @@ function processCommunityDetails(json) {
 		tabsDetail += '<table id="activitiesTable"></table>';
 		tabsDetail += '</div>';
 		activitiesFound = true;
+		tabsCounter++;
+	}
+	
+	// find subcommunities
+	var subcommunities = json.find( function(item) {
+		return item.type === 'subcommunities';
+	});
+	if (subcommunities && subcommunities.data.length > 0) {
+		tabsHeader += '<li><a href="#tabs-' + tabsCounter + '">Subcommunities (' + subcommunities.data.length + ')</a></li>';
+		tabsDetail += '<div id="tabs-' + tabsCounter + '">';
+		tabsDetail += '<table id="subcommunitiesTable"></table>';
+		tabsDetail += '</div>';
+		subcommunitiesFound = true;
 		tabsCounter++;
 	}
 	
@@ -189,7 +205,6 @@ function processCommunityDetails(json) {
 	}
 	
 	if ( activitiesFound ) {
-		console.log('activities data:', activities.data);
 		var activitiesTable = $('#activitiesTable').DataTable( {
 	      data: activities.data,
 	      autoWidth: false,
@@ -206,7 +221,6 @@ function processCommunityDetails(json) {
 	        { "title": "Date", "targets": 2, render: function(publishedDate, type) {
 	      		// if type is display or filter then format the date
 		      		if ( type === 'display' || type === 'filter') {
-		      			console.log('data is ', publishedDate);
 		      			return dateFormat(new Date(publishedDate), 'dd mmm yyyy h:MM:sstt');
 		      		} else {
 		      			// otherwise it must be for sorting so return the raw value
@@ -217,6 +231,23 @@ function processCommunityDetails(json) {
 	      ]
 		});
 	}	
+	
+	if ( subcommunitiesFound ) {
+//		console.log('activities data:', activities.data);
+		var subcommunitiesTable = $('#subcommunitiesTable').DataTable( {
+	      data: subcommunities.data,
+	      autoWidth: false,
+	      searching: false,
+	      paging: determinePaging(activities.data),
+	      "columns": [
+	        { "data": "title" }
+	      ],
+	      "columnDefs" : [
+	        { "title": "Title", "targets": 0 }
+	      ]
+		});
+	}	
+	
 	$('#tabs').tabs();
 
 }

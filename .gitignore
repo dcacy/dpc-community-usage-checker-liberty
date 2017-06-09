@@ -1,5 +1,5 @@
 .DS_Store
-WebContent/WEB-INF/classes
+WebContent/WEB-INF/classes/
 WebContent/WEB-INF/connections.properties
 WebContent/js/date.format.js
 WebContent/js/jquery.loadmask.min.js

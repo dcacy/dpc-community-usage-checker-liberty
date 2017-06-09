@@ -67,10 +67,12 @@ public class MainServlet extends HttpServlet {
 				JSONObject files = new Community().getCommunityFiles(properties, id);
 				JSONObject activity = new Community().getCommunityActivity(properties, id);
 				JSONObject members = new Community().getCommunityMembers(properties, id);
+				JSONObject subcommunities = new Community().getSubcommunities(properties, id);
 				JSONArray result = new JSONArray();
 				result.add(files);
 				result.add(activity);
 				result.add(members);
+				result.add(subcommunities);
 				response.setContentType(MediaType.APPLICATION_JSON);
 				response.getWriter().print(result);
 				} else {
